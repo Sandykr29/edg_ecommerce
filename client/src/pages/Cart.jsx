@@ -1,8 +1,10 @@
 import React, { useContext } from "react";
 import { CartContext } from "../context/CartContext";
 import "./Cart.css";
+import { useNavigate } from "react-router-dom";
 
 const Cart = () => {
+  const navigate = useNavigate()
   const { cart, removeFromCart, addToCart, cartTotal } = useContext(CartContext);
 
   const incrementQuantity = (item) => {
@@ -38,6 +40,7 @@ const Cart = () => {
           ))}
           <div className="cart-total">
             <h3>Total Amount: ${cartTotal}</h3>
+            <button onClick={()=>navigate("/checkout")}>Checkout</button>
           </div>
         </>
       )}
