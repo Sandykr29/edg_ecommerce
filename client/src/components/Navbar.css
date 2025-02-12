@@ -285,3 +285,18 @@ footer {
     width: 90%;
   }
 }
+
+.cart-link {
+  position: relative;
+}
+
+.cart-signal {
+  position: absolute;
+  top: -5px;
+  right: -10px;
+  background: red;
+  color: white;
+  font-size: 12px;
+  padding: 2px 5px;
+  border-radius: 50%;
+}

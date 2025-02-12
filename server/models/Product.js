@@ -5,7 +5,7 @@ const productSchema = new mongoose.Schema({
     description: String,
     price: { type: Number, required: true },
     stock: { type: Number, required: true },
-    totalItems: { type: Number, default: 0 }, // ✅ Ensure totalItems exists
-}, { timestamps: true });
+    totalItems: { type: Number, default: 0 }, 
+}, { versionKey: false });
 
 module.exports = mongoose.model("Product", productSchema);

@@ -4,21 +4,19 @@ import { CartContext } from "../context/CartContext";
 import "./ProductCard.css";
 
 const ProductCard = ({ product }) => {
-  const { isLoggedIn, userName } = useContext(AuthContext);
-  const { addToCart, removeFromCart, cart } = useContext(CartContext);
+  const { isLoggedIn } = useContext(AuthContext);
+  const { addToCart, removeFromCart } = useContext(CartContext);
   const [quantity, setQuantity] = useState(1);
-  const [showQuantity, setShowQuantity] = useState(false);
   const [added, setAdded] = useState(false);
 
   const handleAddToCart = () => {
     if (isLoggedIn) {
       if (added) {
-        removeFromCart(product._id);
+        removeFromCart(id);
         setAdded(false);
       } else {
-        console.log("Adding product to cart:", product, "Quantity:", quantity);
-        addToCart({ ...product, quantity });
-        console.log("this is from addtocart", product, quantity);
+        addToCart(product, quantity);
+        
         setAdded(true);
       }
     } else {
@@ -34,7 +32,7 @@ const ProductCard = ({ product }) => {
         <p className="product-card-description">{product.description}</p>
         <p className="product-card-price">${product.price}</p>
         <div className="product-card-actions">
-          <button onClick={handleAddToCart} className={added ? "cancel-btn" : ""}>
+          <button onClick={() => handleAddToCart(product._id)} className={added ? "cancel-btn" : ""}>
             {added ? "Cancel" : "Add to Cart"}
           </button>
         </div>
