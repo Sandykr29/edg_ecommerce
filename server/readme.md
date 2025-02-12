@@ -6,3 +6,5 @@ MONGO_URI=mongodb+srv:mongodb+srv://sandeep:kumar@cluster0.9rglqlu.mongodb.net/e
      "email":"tester1", 
      "password":"tester1" 
 }
+
+testing file will be removed 
