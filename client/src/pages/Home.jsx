@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import ProductCard from "../components/ProductCard";
+import { GET_PRODUCTS } from "../utils/api";
+import "./Home.css";
 
 const Home = () => {
   const [products, setProducts] = useState([]);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    axios.get("https://edg-ecommerce.onrender.com/api/products")
+    axios.get(GET_PRODUCTS)
       .then((response) => {
-        console.log(response.data);
         setProducts(response.data);
       })
       .catch((err) => {
@@ -23,9 +24,12 @@ const Home = () => {
 
   return (
     <div className="home">
-      {products.map((product) => (
-        <ProductCard key={product._id} product={product} />
-      ))}
+      <h2>Our Products</h2>
+      <div className="product-card-list">
+        {products.map((product) => (
+          <ProductCard key={product._id} product={product} />
+        ))}
+      </div>
     </div>
   );
 };

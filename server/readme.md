@@ -10,4 +10,21 @@ MONGO_URI=mongodb+srv:mongodb+srv://sandeep:kumar@cluster0.9rglqlu.mongodb.net/e
 testing file will be removed 
 
 
-https://edg-ecommerce.onrender.com/api/products all products
+const baseURL=`https://edg-ecommerce.onrender`;
+com/api/products all products
+
+
+for authRoutes
+/api/auth/register
+/api/auth/login
+
+for productRoutes
+
+/api/products
+
+for cartRoutes
+
+/api/cart/add
+for orderRoutes
+
+/api/orders/place

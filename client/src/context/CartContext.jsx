@@ -1,22 +1,34 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useState, useContext } from "react";
+import axios from "axios";
+import { ADD_TO_CART, GET_CART } from "../utils/api";
+import { AuthContext } from "./AuthContext";
 
 export const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
   const [cart, setCart] = useState([]);
+  const { token } = useContext(AuthContext);
 
   const addToCart = (product) => {
-    setCart((prevCart) => {
-      const existingItem = prevCart.find((item) => item._id === product._id);
-      if (existingItem) {
-        return prevCart.map((item) =>
-          item._id === product._id
-            ? { ...item, quantity: item.quantity + 1 }
-            : item
-        );
-      }
-      return [...prevCart, { ...product, quantity: 1 }];
-    });
+    axios.post(ADD_TO_CART, { productId: product._id }, {
+      headers: { Authorization: `Bearer ${token}` }
+    })
+      .then(() => {
+        setCart((prevCart) => {
+          const existingItem = prevCart.find((item) => item._id === product._id);
+          if (existingItem) {
+            return prevCart.map((item) =>
+              item._id === product._id
+                ? { ...item, quantity: item.quantity + 1 }
+                : item
+            );
+          }
+          return [...prevCart, { ...product, quantity: 1 }];
+        });
+      })
+      .catch((err) => {
+        console.error("Failed to add to cart:", err);
+      });
   };
 
   const removeFromCart = (productId) => {
