@@ -8,7 +8,9 @@ const orderRoutes = require("./routes/orderRoutes");
 const productRoutes=require("./routes/productRoutes");
 
 const app = express();
+app.use(cors());
 connectDB();
+
 
 app.use(express.json());
 
