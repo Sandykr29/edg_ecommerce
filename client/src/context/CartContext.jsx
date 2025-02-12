@@ -13,12 +13,20 @@ export const CartProvider = ({ children }) => {
 
   const addToCart = async (product, quantity) => {
     try {
-      
+      const existingProduct = products.find((p) => p._id === product._id);
+      if (existingProduct) {
+        const existingItem = cart.find((item) => item._id === product._id);
+        if (existingItem.quantity + quantity > product.totalItems) {
+          console.log("Cannot add more than available items");
+          return;
+        }
+      }
+
+      let res = await axios.post(ADD_TO_CART(product._id));
+      console.log("this res is from addtocart", res);
 
       setProducts((prevProducts) => [...prevProducts, product]);
       setQuantities((prevQuantities) => [...prevQuantities, quantity]);
-
-      console.log(product)
 
       setCart((prevCart) => {
         const existingItem = prevCart.find((item) => item._id === product._id);

@@ -3,7 +3,17 @@ import { CartContext } from "../context/CartContext";
 import "./Cart.css";
 
 const Cart = () => {
-  const { cart, removeFromCart } = useContext(CartContext);
+  const { cart, removeFromCart, addToCart, cartTotal } = useContext(CartContext);
+
+  const incrementQuantity = (item) => {
+    addToCart(item, 1);
+  };
+
+  const decrementQuantity = (item) => {
+    if (item.quantity > 1) {
+      addToCart(item, -1);
+    }
+  };
 
   return (
     <div className="cart-container">
@@ -11,15 +21,24 @@ const Cart = () => {
       {cart.length === 0 ? (
         <p>Your cart is empty.</p>
       ) : (
-        cart.map((item) => (
-          <div key={item._id} className="cart-item">
-            <img src={item.image} alt={item.title} />
-            <h3>{item.title}</h3>
-            <p>${item.price}</p>
-            <p>Quantity: {item.quantity}</p>
-            <button onClick={() => removeFromCart(item._id)}>Remove</button>
+        <>
+          {cart.map((item) => (
+            <div key={item._id} className="cart-item">
+              <img src={item.image} alt={item.title} />
+              <h3>{item.title}</h3>
+              <p>${item.price}</p>
+              <p>Quantity: {item.quantity}</p>
+              <div className="quantity-controls">
+                <button onClick={() => decrementQuantity(item)}>-</button>
+                <button onClick={() => incrementQuantity(item)}>+</button>
+              </div>
+              <button onClick={() => removeFromCart(item._id)}>Remove</button>
+            </div>
+          ))}
+          <div className="cart-total">
+            <h3>Total Amount: ${cartTotal}</h3>
           </div>
-        ))
+        </>
       )}
     </div>
   );
