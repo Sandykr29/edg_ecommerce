@@ -1,44 +1,38 @@
 import React, { createContext, useState, useContext } from "react";
 import { AuthContext } from "./AuthContext";
-import axios from "axios";
-import { ADD_TO_CART } from "../utils/api";
 
 export const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
   const [cart, setCart] = useState([]);
-  const [products, setProducts] = useState([]);
   const [quantities, setQuantities] = useState([]);
   const { token } = useContext(AuthContext);
 
-  const addToCart = async (product, quantity) => {
+  const addToCart = (product, quantity) => {
+    console.log("this is the product", product);
     try {
-      const existingProduct = products.find((p) => p._id === product._id);
-      if (existingProduct) {
-        const existingItem = cart.find((item) => item._id === product._id);
+      const existingItem = cart.find((item) => item._id === product._id);
+      if (existingItem) {
         if (existingItem.quantity + quantity > product.totalItems) {
           console.log("Cannot add more than available items");
           return;
         }
-      }
-
-      let res = await axios.post(ADD_TO_CART(product._id));
-      console.log("this res is from addtocart", res);
-
-      setProducts((prevProducts) => [...prevProducts, product]);
-      setQuantities((prevQuantities) => [...prevQuantities, quantity]);
-
-      setCart((prevCart) => {
-        const existingItem = prevCart.find((item) => item._id === product._id);
-        if (existingItem) {
-          return prevCart.map((item) =>
+        setCart((prevCart) =>
+          prevCart.map((item) =>
             item._id === product._id
               ? { ...item, quantity: item.quantity + quantity }
               : item
-          );
-        }
-        return [...prevCart, { ...product, quantity }];
-      });
+          )
+        );
+        setQuantities((prevQuantities) =>
+          prevQuantities.map((q, index) =>
+            cart[index]._id === product._id ? q + quantity : q
+          )
+        );
+      } else {
+        setCart((prevCart) => [...prevCart, { ...product, quantity }]);
+        setQuantities((prevQuantities) => [...prevQuantities, quantity]);
+      }
     } catch (err) {
       console.error("Add to cart failed:", err);
     }
@@ -52,12 +46,15 @@ export const CartProvider = ({ children }) => {
         )
         .filter((item) => item.quantity > 0)
     );
+    setQuantities((prevQuantities) =>
+      prevQuantities.filter((_, index) => cart[index]._id !== productId)
+    );
   };
 
   const cartTotal = cart.reduce((total, item) => total + item.price * item.quantity, 0);
 
   return (
-    <CartContext.Provider value={{ cart, addToCart, removeFromCart, cartTotal, products, quantities }}>
+    <CartContext.Provider value={{ cart, addToCart, removeFromCart, cartTotal, quantities }}>
       {children}
     </CartContext.Provider>
   );
