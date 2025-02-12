@@ -1,5 +1,6 @@
 .home {
   margin-top: 30px;
+  padding: 0 20px;
 }
 
 .home h2 {
@@ -10,8 +11,27 @@
 
 .home .product-card-list {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  grid-template-columns: repeat(4, 1fr);
   margin-top: 30px;
   gap: 30px;
   row-gap: 50px;
+}
+
+/* Responsive styles */
+@media (max-width: 1200px) {
+  .home .product-card-list {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 900px) {
+  .home .product-card-list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .home .product-card-list {
+    grid-template-columns: 1fr;
+  }
 }

@@ -13,7 +13,8 @@ export const CartProvider = ({ children }) => {
     axios.post(ADD_TO_CART, { productId: product._id }, {
       headers: { Authorization: `Bearer ${token}` }
     })
-      .then(() => {
+      .then((response) => {
+        console.log("Response from addToCart API:", response.data);
         setCart((prevCart) => {
           const existingItem = prevCart.find((item) => item._id === product._id);
           if (existingItem) {

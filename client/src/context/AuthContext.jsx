@@ -1,33 +1,36 @@
 import React, { createContext, useState, useEffect } from "react";
+import axios from "axios";
 
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [token, setToken] = useState(null);
+  const [token, setToken] = useState(localStorage.getItem("token") || "");
+  const [userName, setUserName] = useState(localStorage.getItem("userName") || "");
 
   useEffect(() => {
-    const storedToken = localStorage.getItem("token");
-    if (storedToken) {
-      setIsLoggedIn(true);
-      setToken(storedToken);
-    }
-  }, []);
-
-  const login = (token) => {
-    setIsLoggedIn(true);
-    setToken(token);
     localStorage.setItem("token", token);
+    localStorage.setItem("userName", userName);
+  }, [token, userName]);
+
+  const login = async (credentials) => {
+    try {
+      const response = await axios.post("/api/auth/login", credentials);
+      setToken(response.data.token);
+      setUserName(response.data.userName);
+    } catch (error) {
+      console.error("Login error:", error);
+    }
   };
 
   const logout = () => {
-    setIsLoggedIn(false);
-    setToken(null);
+    setToken("");
+    setUserName("");
     localStorage.removeItem("token");
+    localStorage.removeItem("userName");
   };
 
   return (
-    <AuthContext.Provider value={{ isLoggedIn, token, login, logout }}>
+    <AuthContext.Provider value={{ token, userName, login, logout }}>
       {children}
     </AuthContext.Provider>
   );
