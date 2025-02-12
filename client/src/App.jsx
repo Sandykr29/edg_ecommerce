@@ -6,9 +6,10 @@ import Home from "./pages/Home";
 import ProductDetails from "./pages/ProductDetails";
 import Cart from "./pages/Cart";
 import Checkout from "./pages/Checkout";
-import Login from "./components/Login";
+import Login from "./pages/Login";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import CartPage from "./components/CartPage";
 import "./App.css";
 
 function App() {
@@ -17,13 +18,16 @@ function App() {
       <CartProvider>
         <Router>
           <Navbar />
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/product/:id" element={<ProductDetails />} />
-            <Route path="/cart" element={<Cart />} />
-            <Route path="/checkout" element={<Checkout />} />
-            <Route path="/login" element={<Login />} />
-          </Routes>
+          <div className="main-content">
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/product/:id" element={<ProductDetails />} />
+              <Route path="/cart" element={<Cart />} />
+              <Route path="/checkout" element={<Checkout />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/cart" element={<CartPage />} />
+            </Routes>
+          </div>
           <Footer />
         </Router>
       </CartProvider>

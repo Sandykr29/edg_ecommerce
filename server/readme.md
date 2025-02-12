@@ -28,3 +28,33 @@ for cartRoutes
 for orderRoutes
 
 /api/orders/place
+
+```
+http://localhost:8000/api/auth/register 
+{
+  "message": "User registered successfully"
+}
+
+or
+{
+    {
+  "message": "Email already exists"
+}
+}
+
+```
+
+```
+on login
+
+{
+  "userName": "tester3",
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3YWNiYzk3NjUzMmVmOTY3MzZlOWU0YyIsImlhdCI6MTczOTM3NDE1OSwiZXhwIjoxNzM5OTc4OTU5fQ.KWrNM6RWLVD7-0jXTp9NQsmNyCoxkplEWitYp3zLwPw"
+}
+or
+{
+  "message": "Invalid email or password"
+}
+
+```
+

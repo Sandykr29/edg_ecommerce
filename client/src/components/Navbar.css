@@ -1,3 +1,4 @@
+
 /* General styles */
 body {
   font-family: Arial, sans-serif;
@@ -34,6 +35,20 @@ a {
   background: none;
   border: none;
   cursor: pointer;
+}
+
+.cart-link {
+  position: relative;
+}
+
+.cart-signal {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  width: 10px;
+  height: 10px;
+  background-color: red;
+  border-radius: 50%;
 }
 
 /* Footer styles */
@@ -269,4 +284,19 @@ footer {
   .login-container {
     width: 90%;
   }
+}
+
+.cart-link {
+  position: relative;
+}
+
+.cart-signal {
+  position: absolute;
+  top: -5px;
+  right: -10px;
+  background: red;
+  color: white;
+  font-size: 12px;
+  padding: 2px 5px;
+  border-radius: 50%;
 }

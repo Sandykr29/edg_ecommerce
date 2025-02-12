@@ -1,33 +1,46 @@
 import React, { createContext, useState, useEffect } from "react";
+import axios from "axios";
+import { AUTH_LOGIN } from "../utils/api";
 
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [token, setToken] = useState(null);
+  const [token, setToken] = useState(localStorage.getItem("token") || "");
+  const [userName, setUserName] = useState(localStorage.getItem("userName") || "");
+  const [isLoggedIn, setIsLoggedIn] = useState(!!token);
 
   useEffect(() => {
-    const storedToken = localStorage.getItem("token");
-    if (storedToken) {
+    if (token) {
+      localStorage.setItem("token", token);
+      localStorage.setItem("userName", userName);
       setIsLoggedIn(true);
-      setToken(storedToken);
+    } else {
+      localStorage.removeItem("token");
+      localStorage.removeItem("userName");
+      setIsLoggedIn(false);
     }
-  }, []);
+  }, [token, userName]);
 
-  const login = (token) => {
-    setIsLoggedIn(true);
-    setToken(token);
-    localStorage.setItem("token", token);
+  const login = async (credentials) => {
+    try {
+      const response = await axios.post(AUTH_LOGIN, credentials);
+      setToken(response.data.token);
+      setUserName(response.data.userName);
+    } catch (error) {
+      console.error("Login error:", error.response?.data?.message || error.message);
+    }
   };
 
   const logout = () => {
+    setToken("");
+    setUserName("");
     setIsLoggedIn(false);
-    setToken(null);
     localStorage.removeItem("token");
+    localStorage.removeItem("userName");
   };
 
   return (
-    <AuthContext.Provider value={{ isLoggedIn, token, login, logout }}>
+    <AuthContext.Provider value={{ token, userName, isLoggedIn, login, logout }}>
       {children}
     </AuthContext.Provider>
   );

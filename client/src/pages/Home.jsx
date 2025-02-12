@@ -9,27 +9,24 @@ const Home = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    axios.get(GET_PRODUCTS)
-      .then((response) => {
-        setProducts(response.data);
-      })
-      .catch((err) => {
-        setError("Failed to load products.");
-      });
+    axios
+      .get(GET_PRODUCTS)
+      .then((response) => setProducts(response.data))
+      .catch(() => setError("Failed to load products."));
   }, []);
-
-  if (error) {
-    return <div>{error}</div>;
-  }
 
   return (
     <div className="home">
       <h2>Our Products</h2>
-      <div className="product-card-list">
-        {products.map((product) => (
-          <ProductCard key={product._id} product={product} />
-        ))}
-      </div>
+      {error ? (
+        <p>{error}</p>
+      ) : (
+        <div className="product-card-list">
+          {products.map((product) => (
+            <ProductCard key={product._id} product={product} />
+          ))}
+        </div>
+      )}
     </div>
   );
 };
