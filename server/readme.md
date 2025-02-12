@@ -1,0 +1,8 @@
+MONGO_URI=mongodb+srv:mongodb+srv://sandeep:kumar@cluster0.9rglqlu.mongodb.net/edg_ecom?retryWrites=true&w=majority
+
+
+{
+ "fullName":"tester1",
+     "email":"tester1", 
+     "password":"tester1" 
+}
