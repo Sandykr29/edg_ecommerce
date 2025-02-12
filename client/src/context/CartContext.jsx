@@ -10,12 +10,12 @@ export const CartProvider = ({ children }) => {
   const { token } = useContext(AuthContext);
 
   const addToCart = (product, quantity) => {
-    console.log("This is the product", product);
     try {
       const existingItem = cart.find((item) => item._id === product._id);
       if (existingItem) {
-        if (existingItem.quantity + quantity >= product.totalItems) {
+        if (existingItem.quantity + quantity > product.totalItems) {
           setMessage(`You have reached the maximum stock for ${product.name}`);
+          alert(`You have reached the maximum stock for ${product.name}`); // Alert inside the provider
           return;
         }
         setCart((prevCart) =>
@@ -25,21 +25,15 @@ export const CartProvider = ({ children }) => {
               : item
           )
         );
-        setQuantities((prevQuantities) =>
-          prevQuantities.map((q, index) =>
-            cart[index]._id === product._id ? q + quantity : q
-          )
-        );
       } else {
         setCart((prevCart) => [...prevCart, { ...product, quantity }]);
-        setQuantities((prevQuantities) => [...prevQuantities, quantity]);
       }
-      setMessage(""); // Reset message if successful
+      setMessage(""); // Reset message when a new item is added
     } catch (err) {
       console.error("Add to cart failed:", err);
     }
   };
-
+  
   const removeFromCart = (productId) => {
     setCart((prevCart) =>
       prevCart

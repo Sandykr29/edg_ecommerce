@@ -6,7 +6,8 @@ const Cart = () => {
   const { cart, removeFromCart, addToCart, cartTotal } = useContext(CartContext);
 
   const incrementQuantity = (item) => {
-    addToCart(item, 1);
+    if(item.quantity===item.totalItems){alert("You have reached the maximum stock for this item")}
+    else addToCart(item, 1);
   };
 
   const decrementQuantity = (item) => {
