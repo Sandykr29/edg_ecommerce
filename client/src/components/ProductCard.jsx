@@ -33,7 +33,7 @@ const ProductCard = ({ product }) => {
         <p className="product-card-price">${product.price}</p>
         <div className="product-card-actions">
           <button onClick={() => handleAddToCart(product._id)} className={added ? "cancel-btn" : ""}>
-            {added ? "Cancel" : "Add to Cart"}
+            {added ? "Added to Cart" : "Add to Cart"}
           </button>
         </div>
       </div>
