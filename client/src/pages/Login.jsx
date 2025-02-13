@@ -7,7 +7,7 @@ import { AUTH_REGISTER, AUTH_LOGIN } from "../utils/api";
 const Login = () => {
   const [isRegistering, setIsRegistering] = useState(false);
   const [fullName, setFullName] = useState("");
-  const [email, setEmail] = useState("tester@tester.com");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("tester");
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -44,9 +44,9 @@ const Login = () => {
         {isRegistering && (
           <input type="text" placeholder="Full Name" value={fullName} onChange={(e) => setFullName(e.target.value)} required />
         )}
-        <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+        <input type="email" placeholder="you_can_use=tester@tester.com" value={email} onChange={(e) => setEmail(e.target.value)} required />
         <div className="password-container">
-          <input type={showPassword ? "text" : "password"} placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+          <input type={showPassword ? "text" : "password"} placeholder="you_can_use=tester" value={password} onChange={(e) => setPassword(e.target.value)} required />
           <button type="button" onClick={() => setShowPassword(!showPassword)} className="toggle-password">
             {showPassword ? "Hide" : "Show"}
           </button>
