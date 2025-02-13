@@ -1,7 +1,10 @@
 # Shopping Cart Application
 
 ## Overview
-This is a React-based shopping cart application that allows users to add, remove, and manage products in their cart. It also includes authentication handling and checkout functionality.
+This is a full-stack MERN eCommerce application that allows users to add, remove, and manage products in their cart. It also includes authentication handling and checkout functionality.
+
+## Live Demo
+[Click here to visit the live site](https://edg-ecommerce.vercel.app/)
 
 ## Features
 - Add and remove items from the cart.
@@ -12,8 +15,8 @@ This is a React-based shopping cart application that allows users to add, remove
 - Checkout functionality using `react-router-dom`.
 
 ## Tech Stack
-- **Frontend:** React, Context API
-- **Routing:** React Router
+- **Frontend:** React, Context API, React Router, CSS
+- **Backend:** Node.js, Express.js, MongoDB
 - **State Management:** useState, useContext
 - **Styling:** CSS
 
@@ -24,8 +27,8 @@ This is a React-based shopping cart application that allows users to add, remove
 ### Steps to Run the Project
 1. **Clone the repository**
    ```sh
-   git clone https://github.com/your-username/shopping-cart.git
-   cd shopping-cart
+   git clone https://github.com/Sandykr29/edg_ecommerce
+   cd edg_ecommerce
    ```
 2. **Install dependencies**
    ```sh
