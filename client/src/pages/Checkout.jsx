@@ -46,7 +46,7 @@ const Checkout = () => {
 
   const handleDismissMessage = () => {
     setMessage("");
-    setCart([]); // Ensure cart is emptied
+    setCart([]);
     navigate("/");
   };
 
