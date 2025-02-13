@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { CartContext } from "../context/CartContext";
 import { AuthContext } from "../context/AuthContext";
-import { ADD_TO_CART, GET_PRODUCTS } from "../utils/api";
+import {  ADD_TO_CART, GET_PRODUCTS } from "../utils/api";
 
 const Checkout = () => {
   const { cart, cartTotal, setCart } = useContext(CartContext);
@@ -15,11 +15,14 @@ const Checkout = () => {
   const [message, setMessage] = useState("");
   const [orderDetails, setOrderDetails] = useState(null);
   const [responseMessage, setResponseMessage] = useState("");
+  const [number,setNumber] = useState(1);
 
-  console.log("this is the cart i am having:", cart);
+  
 
   const handlePlaceOrder = async () => {
-    alert("Order placed successfully!");
+   
+    
+    alert(`Order placed successfully! with items ${number}`);
     if (!shippingAddress) {
       alert("Shipping address is required.");
       return;
@@ -45,11 +48,12 @@ const Checkout = () => {
     try {
       const responses = await Promise.all(
         cart.map((item) => {
-          console.log(item._id, item.totalItems, "must check for patch");
-          console.log(`${GET_PRODUCTS}/${item._id}`, "this is the url");
+          // console.log(${ADD_TO_CART}/${item._id}, "this is the url");
+          console.log(`${ADD_TO_CART(item._id)}`, "this is the url");
+
           return axios.patch(
-            `${GET_PRODUCTS}/${item._id}`,
-            { totalItems: +item.totalItems },
+            `${ADD_TO_CART(item._id)}`,
+            { totalItems: 2 },
             { headers: { Authorization: `Bearer ${token}` } }
           );
         })

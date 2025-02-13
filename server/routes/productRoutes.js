@@ -1,5 +1,5 @@
 const express = require("express");
-const { getProducts, updateProductTotalItems } = require("../controllers/productController");
+const { getProducts, updateProductTotalItems, increaseProductTotalItems } = require("../controllers/productController");
 const authMiddleware = require("../middleware/authMiddleware");
 
 const router = express.Router();
@@ -9,5 +9,9 @@ router.get("/:id?", getProducts);
 
 // Update totalItems of a product (PATCH request)
 router.patch("/:id",authMiddleware, updateProductTotalItems);
+
+
+router.put("/:id", increaseProductTotalItems);
+
 
 module.exports = router;
