@@ -3,8 +3,9 @@ import { CartContext } from "../context/CartContext";
 import { AuthContext } from "../context/AuthContext";
 
 const Checkout = () => {
-  const { cart, cartTotal } = useContext(CartContext);
+  const { cart, cartTotal,setCart } = useContext(CartContext);
   const { userName } = useContext(AuthContext);
+  
   const [shippingAddress, setShippingAddress] = useState("");
   const [paymentMethod, setPaymentMethod] = useState("Cash on Delivery");
   const [message, setMessage] = useState("");
@@ -16,7 +17,7 @@ const Checkout = () => {
       alert("Shipping address is required.");
       return;
     }
-
+setCart([]);
     const order = {
       userName,
       products: cart.map((item) => ({
