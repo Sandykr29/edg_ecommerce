@@ -26,6 +26,7 @@ export const AuthProvider = ({ children }) => {
       const response = await axios.post(AUTH_LOGIN, credentials);
       setToken(response.data.token);
       setUserName(response.data.userName);
+      
     } catch (error) {
       console.error("Login error:", error.response?.data?.message || error.message);
     }

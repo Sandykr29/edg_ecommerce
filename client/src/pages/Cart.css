@@ -59,6 +59,25 @@
     background-color: darkred;
 }
 
+.quantity-controls {
+    display: flex;
+    gap: 5px;
+}
+
+.quantity-controls button {
+    background-color: #ddd;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: 14px;
+    border-radius: 4px;
+    transition: background 0.3s;
+}
+
+.quantity-controls button:hover {
+    background-color: #ccc;
+}
+
 .cart-bottom {
     margin-top: 40px;
     display: flex;
