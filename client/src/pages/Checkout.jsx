@@ -1,19 +1,24 @@
 import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import { CartContext } from "../context/CartContext";
 import { AuthContext } from "../context/AuthContext";
+import { ADD_TO_CART, GET_PRODUCTS } from "../utils/api";
 
 const Checkout = () => {
   const { cart, cartTotal, setCart } = useContext(CartContext);
-  const { userName } = useContext(AuthContext);
+  const { userName, token } = useContext(AuthContext);
   const navigate = useNavigate();
   
   const [shippingAddress, setShippingAddress] = useState("");
   const [paymentMethod, setPaymentMethod] = useState("Cash on Delivery");
   const [message, setMessage] = useState("");
   const [orderDetails, setOrderDetails] = useState(null);
+  const [responseMessage, setResponseMessage] = useState("");
 
-  const handlePlaceOrder = () => {
+  console.log("this is the cart i am having:", cart);
+
+  const handlePlaceOrder = async () => {
     alert("Order placed successfully!");
     if (!shippingAddress) {
       alert("Shipping address is required.");
@@ -24,7 +29,7 @@ const Checkout = () => {
       userName,
       products: cart.map((item) => ({
         productId: item._id,
-        quantity: item.quantity,
+        totalItems: item.totalItems,
         price: item.price,
       })),
       totalPrice: cartTotal,
@@ -35,7 +40,27 @@ const Checkout = () => {
     console.log("Order placed:", order);
     setOrderDetails(order);
     setMessage("Order successfully placed!");
-    setCart([]);
+
+    // Make PATCH requests to update the database
+    try {
+      const responses = await Promise.all(
+        cart.map((item) => {
+          console.log(item._id, item.totalItems, "must check for patch");
+          console.log(`${GET_PRODUCTS}/${item._id}`, "this is the url");
+          return axios.patch(
+            `${GET_PRODUCTS}/${item._id}`,
+            { totalItems: +item.totalItems },
+            { headers: { Authorization: `Bearer ${token}` } }
+          );
+        })
+      );
+      console.log("PATCH responses:", responses);
+      setResponseMessage("Database updated successfully!");
+      setCart([]);
+    } catch (error) {
+      console.error("Failed to update the database:", error);
+      setResponseMessage("Failed to update the database.");
+    }
 
     // Automatically redirect to home after 3 seconds
     setTimeout(() => {
@@ -90,12 +115,13 @@ const Checkout = () => {
               <ul>
                 {orderDetails.products.map((product, index) => (
                   <li key={index}>
-                    Product ID: {product.productId}, Quantity: {product.quantity}, Price: ${product.price}
+                    Product ID: {product.productId}, totalItems: {product.totalItems}, Price: ${product.price}
                   </li>
                 ))}
               </ul>
             </div>
           )}
+          {responseMessage && <p>{responseMessage}</p>}
         </div>
       )}
     </div>

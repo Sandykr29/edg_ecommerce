@@ -35,3 +35,17 @@
     grid-template-columns: 1fr;
   }
 }
+
+.loading-message {
+  font-size: 1.5em;
+  color: #007bff;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.error-message {
+  font-size: 1.5em;
+  color: #dc3545;
+  text-align: center;
+  margin-top: 20px;
+}

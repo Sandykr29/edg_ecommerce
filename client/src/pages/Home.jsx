@@ -7,19 +7,28 @@ import "./Home.css";
 const Home = () => {
   const [products, setProducts] = useState([]);
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     axios
       .get(GET_PRODUCTS)
-      .then((response) => setProducts(response.data))
-      .catch(() => setError("Failed to load products."));
+      .then((response) => {
+        setProducts(response.data);
+        setLoading(false);
+      })
+      .catch(() => {
+        setError("Failed to load products.");
+        setLoading(false);
+      });
   }, []);
 
   return (
     <div className="home">
       <h2>Our Products</h2>
-      {error ? (
-        <p>{error}</p>
+      {loading ? (
+        <p className="loading-message">Loading products...</p>
+      ) : error ? (
+        <p className="error-message">{error}</p>
       ) : (
         <div className="product-card-list">
           {products.map((product) => (

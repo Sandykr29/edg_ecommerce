@@ -35,6 +35,7 @@ const ProductCard = ({ product }) => {
           <button onClick={() => handleAddToCart(product._id)} className={added ? "cancel-btn" : ""}>
             {added ? "Added to Cart" : "Add to Cart"}
           </button>
+          <p>availabe units {product.totalItems}</p>
         </div>
       </div>
     </div>
