@@ -1,23 +1,25 @@
 import React, { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { CartContext } from "../context/CartContext";
 import { AuthContext } from "../context/AuthContext";
 
 const Checkout = () => {
-  const { cart, cartTotal,setCart } = useContext(CartContext);
+  const { cart, cartTotal, setCart } = useContext(CartContext);
   const { userName } = useContext(AuthContext);
+  const navigate = useNavigate();
   
   const [shippingAddress, setShippingAddress] = useState("");
   const [paymentMethod, setPaymentMethod] = useState("Cash on Delivery");
   const [message, setMessage] = useState("");
+  const [orderDetails, setOrderDetails] = useState(null);
 
   const handlePlaceOrder = () => {
-    alert(`Congratulations Mr. ${userName},Order successfully placed!`)
-
+    alert("Order placed successfully!");
     if (!shippingAddress) {
       alert("Shipping address is required.");
       return;
     }
-setCart([]);
+
     const order = {
       userName,
       products: cart.map((item) => ({
@@ -31,7 +33,21 @@ setCart([]);
     };
 
     console.log("Order placed:", order);
+    setOrderDetails(order);
     setMessage("Order successfully placed!");
+    setCart([]);
+
+    // Automatically redirect to home after 3 seconds
+    setTimeout(() => {
+      setCart([]); // Ensure cart is emptied
+      navigate("/");
+    }, 3000);
+  };
+
+  const handleDismissMessage = () => {
+    setMessage("");
+    setCart([]); // Ensure cart is emptied
+    navigate("/");
   };
 
   return (
@@ -59,7 +75,29 @@ setCart([]);
         </select>
       </div>
       <button onClick={handlePlaceOrder}>Place Order</button>
-      {message && <p>{message}</p>}
+      {message && (
+        <div>
+          <p>{message}</p>
+          <button onClick={handleDismissMessage}>OK</button>
+          {orderDetails && (
+            <div>
+              <h3>Order Details:</h3>
+              <p>User Name: {orderDetails.userName}</p>
+              <p>Shipping Address: {orderDetails.shippingAddress}</p>
+              <p>Total Price: ${orderDetails.totalPrice}</p>
+              <p>Payment Status: {orderDetails.paymentStatus}</p>
+              <h4>Products:</h4>
+              <ul>
+                {orderDetails.products.map((product, index) => (
+                  <li key={index}>
+                    Product ID: {product.productId}, Quantity: {product.quantity}, Price: ${product.price}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 };
