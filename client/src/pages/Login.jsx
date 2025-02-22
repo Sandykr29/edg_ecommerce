@@ -45,12 +45,14 @@ const Login = () => {
           <input type="text" placeholder="Full Name" value={fullName} onChange={(e) => setFullName(e.target.value)} required />
         )}
         <input type="email" placeholder="you_can_use=tester@tester.com" value={email} onChange={(e) => setEmail(e.target.value)} required />
+        
         <div className="password-container">
           <input type={showPassword ? "text" : "password"} placeholder="you_can_use=tester" value={password} onChange={(e) => setPassword(e.target.value)} required />
-          <button type="button" onClick={() => setShowPassword(!showPassword)} className="toggle-password">
-            {showPassword ? "Hide" : "Show"}
-          </button>
+          <span className="toggle-password" onClick={() => setShowPassword(!showPassword)}>
+            {showPassword ? "🚫" : "👁"}
+          </span>
         </div>
+
         <button type="submit" disabled={loading}>{loading ? "Processing..." : isRegistering ? "Register" : "Login"}</button>
       </form>
       <button onClick={() => setIsRegistering(!isRegistering)} disabled={loading}>
