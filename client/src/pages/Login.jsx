@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 import axios from "axios";
-import { AUTH_REGISTER, AUTH_LOGIN } from "../utils/api";
+import { AUTH_REGISTER } from "../utils/api";
 
 const Login = () => {
   const [isRegistering, setIsRegistering] = useState(false);

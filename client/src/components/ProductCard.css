@@ -41,6 +41,7 @@
   justify-content: space-between;
   align-items: center;
   margin-top: 10px;
+  gap:15px
 }
 
 .product-card-actions button,
@@ -82,4 +83,17 @@
 
 .product-card-actions a:hover {
   color: deepskyblue;
+}
+
+@keyframes highlightText {
+  0% { color: red; transform: scale(1); }
+  50% { color: violet; transform: scale(1.1); }
+  100% { color: red; transform: scale(1); }
+}
+
+.product-card-qty {
+  font-size: 12px; /* Make it a bit smaller */
+  font-weight: bold;
+  animation: highlightText 1s infinite alternate;
+  text-align: right;
 }
